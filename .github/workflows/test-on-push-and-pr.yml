@@ -1,20 +1,22 @@
-name: test-on-push-and-pr
-
+name: Ruby build xxx IR
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ '*' ]
+  workflow_dispatch:
 
 jobs:
-  build:
+  RUBY:
     runs-on: ubuntu-latest
-
+    name: Run build
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.1
-    - name: Run 'pr' target
-      run: make pr
+
+      - uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4.1' # specify your Ruby version
+          
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install  # If you have a Gemfile
+          gem list # This will list all installed gems
